@@ -55,21 +55,27 @@ export const createProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const updatedProduct = await prisma.product.update({
-    where: {
-      id_belongToId: {
-        id: req.params.id,
-        belongToId: req.user.id,
+  console.log("inside updateProduct");
+
+  try {
+    const updatedProduct = await prisma.product.update({
+      where: {
+        id_belongToId: {
+          id: req.params.id,
+          belongToId: req.user.id,
+        },
       },
-    },
-    data: {
-      name: req.body.name,
-    },
-  });
-  res.json({
-    updatedProduct,
-    message: "Product Update SuccessFully",
-  });
+      data: {
+        name: req.body.name,
+      },
+    });
+    res.json({
+      updatedProduct,
+      message: "Product Update SuccessFully",
+    });
+  } catch (error) {
+    console.log("error while update", error);
+  }
 };
 
 export const deleteProduct = async (req, res) => {
@@ -85,3 +91,4 @@ export const deleteProduct = async (req, res) => {
     message: "Product deleted SuccessFully",
   });
 };
+// 900beaa1-b84c-4647-9c88-ac1e55ace807
